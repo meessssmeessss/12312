@@ -1,0 +1,123 @@
+Boven in je repository klik je op het tabblad Actions — daar zie je een geel bolletje draaien. Wacht tot het een groen vinkje wordt (~1 minuut).
+Klik die run open, scroll naar beneden naar Artifacts, klik op MinetopiaPlugin om te downloaden. Dat is een zip — pak die uit en daarin zit MinetopiaPlugin.jar.
+Sleep die .jar in de plugins-map van je server en herstart de server. Klaar.
+snap ik neit!
+
+Vereenvoudigde instructies en identificeerde behoefte aan serverconfiguratieverduidelijking
+Vereenvoudigde instructies en identificeerde behoefte aan serverconfiguratieverduidelijking
+Sorry, laat ik het rustiger uitleggen, stap voor stap met precies wat je ziet en waar je op klikt.
+
+Stap 5 — De build bekijken
+
+Je bent nu op de hoofdpagina van je repository (waar je net bestanden hebt geüpload).
+Bovenaan de pagina zie je een rij tabbladen: Code, Issues, Pull requests, Actions, etc. Klik op Actions.
+Je ziet een lijst met één regel erin, iets als "Add files via upload". Links daarvan staat een rond icoontje:
+🟡 geel/oranje = hij is nog bezig
+🟢 groen vinkje = klaar en gelukt
+🔴 rood kruisje = mislukt (laat het weten als je dit ziet)
+Ververs de pagina (F5) na een minuutje tot je het groene vinkje ziet.
+Stap 6 — Het bestand downloaden
+
+Klik op die regel ("Add files via upload") om de run te openen.
+Scroll helemaal naar beneden op die pagina. Daar staat een kopje Artifacts met daaronder een blokje met de naam MinetopiaPlugin.
+Klik op dat blokje MinetopiaPlugin — hij downloadt een zip-bestandje naar je Downloads-map.
+Dubbelklik dat gedownloade zip-bestand om het uit te pakken (net zoals je met de vorige zip deed). Er komt één bestand uit: MinetopiaPlugin.jar.
+Stap 7 — Op de server zetten
+Dit hangt ervan af hoe jouw server draait — dat maakt nogal verschil voor hoe je erbij kan.
+
+1783037669508_{C54C98F1-676C-45F7-A573-4A7B28B9A9F5}.png
+
+Diagnosed repository structure issues and prioritized fixes
+Diagnosed repository structure issues and prioritized fixes
+Ah, ik zie het probleem — de bestanden staan nu allemaal los in de hoofdmap van je repository, in plaats van in de mapjes waar ze horen (zoals src/main/java/...). Dat gebeurt als je losse bestanden sleept in plaats van de hele map in één keer. Daardoor zal de build straks mislukken, en ik zie ook geen .github-map (die met de bouw-instructie erin) — die ontbreekt dus ook.
+
+Laten we dit opnieuw doen, maar dan goed. Makkelijkste manier: verwijder deze repository en begin opnieuw met de map in zijn geheel.
+
+Stap 1 — Repository verwijderen
+
+Klik bovenaan op Settings (het tandwieltje, naast Insights).
+Scroll helemaal naar beneden tot de rode sectie Danger Zone.
+Klik op Delete this repository, typ ter bevestiging de naam die er gevraagd wordt, en klik nogmaals op de rode knop.
+Stap 2 — Nieuwe repository maken
+
+Klik rechtsboven op + → New repository.
+Geef weer een naam (bv. minetopia) → Create repository.
+Stap 3 — Zorg dat je de uitgepakte map hebt
+
+Zoek op je pc het zip-bestand dat ik je gaf (minetopia-plugin.zip) in je Downloads-map.
+Pak het uit (rechtermuisknop → "Alles uitpakken" / "Extract All"). Je krijgt een map genaamd minetopia-plugin met daarin allemaal mapjes (src, .github, etc.) — laat die map dicht, niet erin gaan kijken.
+Stap 4 — De hele map in één keer uploaden
+
+Ga in je nieuwe (lege) repository naar Add file → Upload files.
+Open in je bestandsverkenner de map waar de map minetopia-plugin in staat.
+Sleep de map minetopia-plugin zelf (dus de hele map, niet de bestanden erin los) naar het grijze upload-vak in de browser. Zo blijft de mapstructuur behouden.
+Onderaan: klik Commit changes.
+Kun je dat proberen en een screenshot sturen van hoe de bestandenlijst er daarna uitziet? Dan check ik of de structuur nu goed staat voordat we naar Actions kijken.
+
+1783037826125_{BE939AD1-A749-47AA-BAAC-2BE4F483DED0}.png
+
+Identified structural misalignment and prescribed reorganization strategy
+Identified structural misalignment and prescribed reorganization strategy
+Bijna goed! Alleen zit alles nu één laagje te diep — er staat een map minetopia-plugin in je repository, met daarin pas de echte bestanden (pom.xml, src, .github). GitHub zoekt de bouwinstructie (.github/workflows) alleen in de hoofdmap zelf, niet in een submap. Daardoor start de Actions-build straks niet.
+
+Fix: verwijder die map en upload opnieuw, maar dan de inhoud van de map, niet de map zelf.
+
+Stap 1 — De verkeerde map verwijderen
+
+Klik in je repository op de map minetopia-plugin om hem te openen.
+Rechtsboven de bestandenlijst klik je op ... (of ga naar elk bestand los) — makkelijker: ga naar Settings → Danger Zone is niet nodig, we hoeven alleen deze map te legen. Simpeler: verwijder de hele repository (Settings → Danger Zone → Delete this repository) en maak een nieuwe aan, zoals vorige keer.
+Stap 2 — Opnieuw uploaden, dit keer de inhoud
+
+Maak een nieuwe repository aan.
+Ga naar Add file → Upload files.
+Open op je pc de uitgepakte map minetopia-plugin (dus ga er wél in deze keer).
+Selecteer alles wat erin staat (klik op één bestand, dan Ctrl+A om alles te selecteren: dat zijn de mappen src en .github, en de bestanden pom.xml, README.md).
+Sleep die geselecteerde bestanden/mappen (dus niet de omliggende map zelf) naar het upload-vak in de browser.
+Klik Commit changes.
+Controleer daarna of je bovenaan in de bestandenlijst direct pom.xml en de map src ziet staan (niet nog een map minetopia-plugin ertussen). Stuur gerust weer een screenshot, dan check ik het voor je voordat we naar Actions gaan.
+
+1783037943572_{82F56D23-981C-4988-89BB-5F7E67840F86}.png
+
+Identified missing workflow folder and devised web-based solution
+Identified missing workflow folder and devised web-based solution
+Bijna daar — de map src/main en pom.xml staan nu goed op de juiste plek. Er ontbreekt alleen nog de map .github met de bouw-instructie erin. Dat komt omdat mappen die met een punt beginnen vaak onzichtbaar zijn in je bestandsverkenner (macOS/Finder verbergt ze standaard), waardoor hij niet meeging bij het slepen.
+
+Geen probleem — dat bestand maken we gewoon direct in de browser aan, dan hoef je niks te slepen.
+
+Stap 1 — Nieuw bestand aanmaken
+
+Klik op de groene knop Add file (rechtsboven de bestandenlijst) → Create new file.
+Er verschijnt een tekstvak boven de editor waar je een bestandsnaam typt. Typ hier precies dit (met de slashes erin — GitHub maakt daar automatisch de mapjes van):
+.github/workflows/build.yml
+Stap 2 — Inhoud plakken
+Plak in het grote tekstvak eronder precies dit:
+
+yaml
+name: Build plugin jar
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Build met Maven
+        run: mvn -B clean package
+
+      - name: Upload jar als download
+        uses: actions/upload-artifact@v4
+        with:
+          name: MinetopiaPlugin
+          path: target/MinetopiaPlugin.jar
