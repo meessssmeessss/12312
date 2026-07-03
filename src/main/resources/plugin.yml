@@ -1,0 +1,37 @@
+name: MinetopiaPlugin
+version: '1.0.0'
+main: com.minetopia.plugin.MinetopiaPlugin
+api-version: '1.21'
+author: Minetopia
+description: Economy, levels, plots, agenten en wiet-systeem voor een RP stadsserver.
+
+commands:
+  maakover:
+    description: Maak geld over naar een andere speler.
+    usage: /maakover <speler> <bedrag>
+  kijksaldo:
+    description: Bekijk jouw saldo of dat van een ander.
+    usage: /kijksaldo [speler]
+  zetsaldo:
+    description: (Admin) Zet het saldo van een speler.
+    usage: /zetsaldo <speler> <bedrag>
+  handboei:
+    description: Boei een speler (of maak hem los).
+    usage: /handboei <speler>
+  fouilleer:
+    description: Doorzoek de inventory van een speler.
+    usage: /fouilleer <speler>
+  plot:
+    description: Beheer je plot.
+    usage: /plot <pos1|pos2|create|add|remove|delete|info|upgrade>
+  dealer:
+    description: (Admin) Spawn de wietdealer NPC op je locatie.
+    usage: /dealer spawn
+
+permissions:
+  minetopia.agent:
+    description: Toegang tot agent-commando's (handboei/fouilleer).
+    default: op
+  minetopia.admin:
+    description: Toegang tot admin-commando's.
+    default: op
